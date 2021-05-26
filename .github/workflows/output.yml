@@ -39,7 +39,7 @@ jobs:
 
       - name: Sync to S3
         id: s3_sync
-        uses: haukurh/aws-s3-sync-action@v0.0.5
+        uses: haukurh/aws-s3-sync-action@v0.0.6
         with:
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
       - name: Work with output
