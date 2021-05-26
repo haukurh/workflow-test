@@ -34,7 +34,7 @@ jobs:
         id: s3-sync
         uses: haukurh/aws-s3-sync-action@v0.0.3
         with:
-          source: dist/
-          destination: s3://not-real/
+          directory: dist/
+          s3-bucket: s3://not-real/
       - name: Work with output
         run: aws s3 sync dist/ s3://not-real/
