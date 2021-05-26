@@ -33,3 +33,12 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: echo ${{ toJSON(steps.testing) }}
+
+      - name: Sync to S3
+        id: s3-sync
+        uses: haukurh/aws-s3-sync-action@v0.0.2
+        with:
+          source: dist/
+          destination: s3://not-real/
+      - name: Work with output
+        run: echo ${{ steps.s3-sync.outputs.stdout }}
