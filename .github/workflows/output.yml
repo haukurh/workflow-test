@@ -32,7 +32,7 @@ jobs:
 
       - name: Sync to S3
         id: s3-sync
-        uses: haukurh/aws-s3-sync-action@v0.0.2
+        uses: haukurh/aws-s3-sync-action@v0.0.3
         with:
           source: dist/
           destination: s3://not-real/
