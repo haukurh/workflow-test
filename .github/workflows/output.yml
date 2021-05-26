@@ -52,4 +52,4 @@ jobs:
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
 
       - name: Work with output
-        run: echo "${{ join([steps.s3_sync1.outputs.stdout, steps.s3_sync2.outputs.stdout]) }}"
+        run: echo "${{ steps.s3_sync1.outputs.stdout }}${{ steps.s3_sync2.outputs.stdout }}"
