@@ -37,10 +37,19 @@ jobs:
         id: testing
         run: echo Hello, world!
 
-      - name: Sync to S3
-        id: s3_sync
+      - name: Sync folder to S3
+        id: s3_sync1
         uses: haukurh/aws-s3-sync-action@v0.0.6
         with:
+          directory: test1
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+
+      - name: Sync folder2 to S3
+        id: s3_sync2
+        uses: haukurh/aws-s3-sync-action@v0.0.6
+        with:
+          directory: test2
+          s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+
       - name: Work with output
-        run: echo "${{ steps.s3_sync.outputs.stdout }}"
+        run: echo "${{ join(steps.s3_sync*.outputs.stdout) }}"
