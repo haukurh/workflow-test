@@ -43,5 +43,5 @@ jobs:
         with:
           directory: dist/
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
-#      - name: Work with output
-#        run: aws s3 sync dist/ s3://not-real/
+      - name: Work with output
+        run: echo ${{ steps.s3-sync.outputs.stdout }}
