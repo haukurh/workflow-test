@@ -63,3 +63,6 @@ jobs:
       - name: test output
         if: steps.cloudfront.outputs.count != 0
         run: echo ${{ steps.cloudfront.outputs.json }}
+
+      - name: test output2
+        run: echo ${{ steps.cloudfront.outputs.json }}
