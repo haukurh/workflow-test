@@ -41,8 +41,9 @@ jobs:
         id: s3_sync1
         uses: haukurh/aws-s3-sync-action@v0.0.13
         with:
-          directory: ${{ github.workspace }}/test1/
+          directory: test1/
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+          path: test1/
 
       - name: Sync folder2 to S3
         id: s3_sync2
@@ -50,6 +51,7 @@ jobs:
         with:
           directory: test2
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+          path: test2/
 
       - name: Work with output
         run: echo "${{ steps.s3_sync1.outputs.stdout }}${{ steps.s3_sync2.outputs.stdout }}"
