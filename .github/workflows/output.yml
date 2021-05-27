@@ -39,14 +39,14 @@ jobs:
 
       - name: Sync folder to S3
         id: s3_sync1
-        uses: haukurh/aws-s3-sync-action@v0.0.12
+        uses: haukurh/aws-s3-sync-action@v0.0.13
         with:
           directory: ${{ github.workspace }}/test1/
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
 
       - name: Sync folder2 to S3
         id: s3_sync2
-        uses: haukurh/aws-s3-sync-action@v0.0.12
+        uses: haukurh/aws-s3-sync-action@v0.0.13
         with:
           directory: test2
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
