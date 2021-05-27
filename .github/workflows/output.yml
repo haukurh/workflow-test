@@ -61,8 +61,8 @@ jobs:
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
 
       - name: test output
-        if: steps.cloudfront.outputs.count != 0
+        if: steps.cloudfront.outputs.quantity != 0
         run: echo ${{ steps.cloudfront.outputs.json }}
 
       - name: test output2
-        run: echo ${{ steps.cloudfront.outputs.json }}
+        run: echo '${{ steps.cloudfront.outputs.json }}'
