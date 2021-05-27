@@ -41,7 +41,7 @@ jobs:
         id: s3_sync1
         uses: haukurh/aws-s3-sync-action@v0.0.12
         with:
-          directory: test1/
+          directory: ${{ github.workspace }}test1/
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
 
       - name: Sync folder2 to S3
