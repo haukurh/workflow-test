@@ -62,7 +62,4 @@ jobs:
 
       - name: test output
         if: steps.cloudfront.outputs.quantity != 0
-        run: echo ${{ steps.cloudfront.outputs.json }}
-
-      - name: test output2
-        run: echo '${{ steps.cloudfront.outputs.json }}'
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DIST }} --invalidation-batch ${{ steps.cloudfront.outputs.json }}
