@@ -1,4 +1,4 @@
-name: "Deploy files to a server over FTP"
+name: "lftp-deploy: Deploy files to a server over FTP"
 
 on:
   # Triggers the workflow on tag called 'lftp-deploy-*'
