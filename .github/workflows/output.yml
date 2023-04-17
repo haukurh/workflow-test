@@ -1,14 +1,12 @@
 # This is a basic workflow to help you get started with Actions
-
-name: Test output
+name: Test action output
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on tag called 'action-output-*'
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+      - action-output-*
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -42,7 +40,7 @@ jobs:
         uses: haukurh/aws-s3-sync-action@v0.0.14
         with:
           directory: test1/
-          s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+          s3-bucket: ${{ vars.AWS_S3_BUCKET }}
           s3-path: /test1/
 
       - name: Sync folder2 to S3
@@ -50,7 +48,7 @@ jobs:
         uses: haukurh/aws-s3-sync-action@v0.0.14
         with:
           directory: test2
-          s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+          s3-bucket: ${{ vars.AWS_S3_BUCKET }}
           s3-path: /test2/
 
       - name: Work with output
@@ -58,8 +56,8 @@ jobs:
         uses: haukurh/aws-cloudfront-invalidation-action@v0.0.4
         with:
           sync-output: "${{ steps.s3_sync1.outputs.stdout }}${{ steps.s3_sync2.outputs.stdout }}"
-          s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+          s3-bucket: ${{ vars.AWS_S3_BUCKET }}
 
       - name: test output
         if: steps.cloudfront.outputs.quantity != 0
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DIST }} --invalidation-batch ${{ steps.cloudfront.outputs.json_escaped }}
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.AWS_CLOUDFRONT_DIST }} --invalidation-batch ${{ steps.cloudfront.outputs.json_escaped }}
