@@ -26,9 +26,9 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
+          aws-region: ${{ vars.AWS_REGION }}
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -39,7 +39,7 @@ jobs:
         id: s3_sync1
         uses: haukurh/aws-s3-sync-action@v0.0.14
         with:
-          directory: test1/
+          directory: resources/action-output/test1/
           s3-bucket: ${{ vars.AWS_S3_BUCKET }}
           s3-path: /test1/
 
@@ -47,7 +47,7 @@ jobs:
         id: s3_sync2
         uses: haukurh/aws-s3-sync-action@v0.0.14
         with:
-          directory: test2
+          directory: resources/action-output/test2
           s3-bucket: ${{ vars.AWS_S3_BUCKET }}
           s3-path: /test2/
 
