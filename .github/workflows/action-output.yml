@@ -3,10 +3,10 @@ name: Test action output
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow on tag called 'action-output-*'
+  # Triggers the workflow on tag called 'action-output*'
   push:
     tags:
-      - action-output-*
+      - action-output*
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
