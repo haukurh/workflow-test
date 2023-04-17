@@ -1,0 +1,66 @@
+name: "Deploy files to a server over FTP"
+
+on:
+  # Triggers the workflow on tag called 'lftp-deploy-*'
+  push:
+    tags:
+      - lftp-deploy*
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: "Build app"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        # fetch all the git history for next step
+        with:
+          fetch-depth: 0
+
+        # silly debug step
+      - name: Print out file system pre fix
+        run: ls -lha "$(pwd)/tmp"
+        # Setting file modified date from git commit history so lftp can sync only modified files.
+      - name: Fix file modified date
+        run: git ls-files | xargs -I{} git log -1 --date=format:%Y%m%d%H%M.%S --format='touch -t %ad "{}"' "{}" | $SHELL
+      - name: Print out file system
+        run: ls -lha "$(pwd)/resources/lftp-deploy/tmp"
+      - name: 'Tar files'
+        run: tar -cvf tmp.tar tmp
+        # testing out artifacts
+      - name: Save tmp directory as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: tmp-dir
+          path: tmp.tar
+
+  deployStaging:
+    name: "Deploy to staging"
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: "http://staging.example.com"
+    steps:
+      - name: download build
+        uses: actions/download-artifact@v3
+        with:
+          name: tmp-dir
+      - name: 'Tar files'
+        run: tar -xf tmp.tar
+      - name: current directory
+        run: pwd
+      - name: print out file system
+        run: ls -lha "$(pwd)"
+        # deploy files
+      - name: Deploy files via SFTP
+        uses: haukurh/lftp-action@63f5014bf9b3fdb3dd3b673e932013b8385b1a40
+        with:
+          ftp_host: ${{ vars.FTP_HOST }}
+          ftp_port: ${{ vars.FTP_PORT }}
+          ftp_user: ${{ vars.FTP_USER }}
+          ftp_pass: ${{ secrets.FTP_PASS }}
+          ftp_host_fingerprint: ${{ vars.FTP_HOST_FINGERPRINT }}
+          commands: mirror --continue --reverse --delete --verbose ./resources/lftp-deploy/ /dev/htdocs/test/
