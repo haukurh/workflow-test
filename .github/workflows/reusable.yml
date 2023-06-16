@@ -6,6 +6,11 @@ on:
       some_path:
         required: true
         type: string
+      stage:
+        required: false
+        default: 'production'
+        description: 'Used to differentiate between staging vs. production'
+        type: string
     secrets:
       my_secret:
         required: true
@@ -24,6 +29,14 @@ jobs:
 
       - name: 'print input "some-path"'
         run: echo "'${{ inputs.some_path }}'"
+
+      - name: 'only run if "stage" is set to "production"'
+        if: input.stage == 'production'
+        run: echo "only if production"
+
+      - name: 'only run if "stage" is NOT set to "production"'
+        if: input.stage != 'production'
+        run: echo "only if NOT production"
 
       - name: 'print undefined variable'
         run: echo "'${{ vars.UNDEFINED }}'"
