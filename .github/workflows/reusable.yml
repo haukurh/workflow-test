@@ -1,0 +1,25 @@
+name: "reusable: the workflow it self"
+
+on:
+  workflow_call:
+    inputs:
+      some-path:
+        required: true
+        type: string
+    secrets:
+      my-secret:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'printenv'
+        run: printenv
+
+      - name: 'print variable "some-path"'
+        run: echo ${{ vars.some-path }}
+
+      - name: 'print undefined variable'
+        run: echo ${{ vars.undefined }}
