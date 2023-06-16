@@ -3,11 +3,11 @@ name: "reusable: the workflow it self"
 on:
   workflow_call:
     inputs:
-      some-path:
+      some_path:
         required: true
         type: string
     secrets:
-      my-secret:
+      my_secret:
         required: true
 
 jobs:
@@ -19,7 +19,13 @@ jobs:
         run: printenv
 
       - name: 'print variable "some-path"'
-        run: echo ${{ vars.some-path }}
+        run: echo "'${{ vars.SOME_PATH }}'"
+
+      - name: 'print input "some-path"'
+        run: echo "'${{ inputs.some_path }}'"
 
       - name: 'print undefined variable'
-        run: echo ${{ vars.undefined }}
+        run: echo "'${{ vars.UNDEFINED }}'"
+
+      - name: 'print secret'
+        run: echo "'${{ secrets.my_secret }}'"

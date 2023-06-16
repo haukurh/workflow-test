@@ -12,6 +12,6 @@ jobs:
   call:
     uses: ./.github/workflows/reusable.yml
     with:
-      some-path: '/usr/local/etc/shadow'
+      some_path: '/usr/local/etc/shadow'
     secrets:
-      my-secret: 'hello'
+      my_secret: 'hello'
