@@ -10,6 +10,7 @@ on:
 
 jobs:
   call:
+    name: 'Run custom reusable workflow'
     uses: ./.github/workflows/reusable.yml
     with:
       some_path: '/usr/local/etc/shadow'

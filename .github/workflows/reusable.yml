@@ -11,7 +11,8 @@ on:
         required: true
 
 jobs:
-  build:
+  test:
+    name: 'Job custom name'
     runs-on: ubuntu-latest
 
     steps:
