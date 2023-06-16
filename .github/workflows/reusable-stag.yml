@@ -14,5 +14,6 @@ jobs:
     uses: ./.github/workflows/reusable.yml
     with:
       some_path: '/usr/local/etc/shadow'
+      stage: 'staging'
     secrets:
       my_secret: 'hello'
