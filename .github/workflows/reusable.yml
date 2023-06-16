@@ -31,11 +31,11 @@ jobs:
         run: echo "'${{ inputs.some_path }}'"
 
       - name: 'only run if "stage" is set to "production"'
-        if: input.stage == 'production'
+        if: inputs.stage == 'production'
         run: echo "only if production"
 
       - name: 'only run if "stage" is NOT set to "production"'
-        if: input.stage != 'production'
+        if: inputs.stage != 'production'
         run: echo "only if NOT production"
 
       - name: 'print undefined variable'
