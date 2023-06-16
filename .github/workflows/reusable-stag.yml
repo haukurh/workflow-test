@@ -13,4 +13,5 @@ jobs:
     uses: ./.github/workflows/reusable.yml
     with:
       some-path: '/usr/local/etc/shadow'
-      secrets: inherit
+    secrets:
+      my-secret: 'hello'
